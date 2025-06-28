@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO)
 
 sarvam_client = SarvamAI(api_subscription_key="b5d9635d-8168-411e-9ed8-0c2e33114f5a")
 
-RASA_BASE_URL = "https://med-plat-4.onrender.com"
+RASA_BASE_URL = "https://0.0.0.0/5005"
 RASA_SERVER_URL = f"{RASA_BASE_URL}/webhooks/rest/webhook"
 
 @app.route("/chat", methods=["POST"])

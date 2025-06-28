@@ -6,11 +6,10 @@ import logging
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
-# Initialize SarvamAI client
 sarvam_client = SarvamAI(api_subscription_key="b5d9635d-8168-411e-9ed8-0c2e33114f5a")
 
-# Rasa server URL
-RASA_SERVER_URL = " https://med-plat-4.onrender.com/webhooks/rest/webhook"
+RASA_BASE_URL = "https://med-plat-4.onrender.com"
+RASA_SERVER_URL = f"{RASA_BASE_URL}/webhooks/rest/webhook"
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -47,21 +46,21 @@ def chat():
 
         logging.info(f"[Translated to English] {translated_input}")
 
-        # ✅ Step 3: Set slot in Rasa tracker
-        requests.post(
-            f" https://med-plat-4.onrender.com/conversations/{sender_id}/tracker/events",
-            json={
-                "event": "slot",
-                "name": "user_lang",
-                "value": lang_code
-            }
-        )
+        # Step 3: Set slot in Rasa tracker
+        tracker_url = f"{RASA_BASE_URL}/conversations/{sender_id}/tracker/events"
+        requests.post(tracker_url, json={
+            "event": "slot",
+            "name": "user_lang",
+            "value": lang_code
+        })
 
         # Step 4: Send translated message to Rasa
         rasa_response = requests.post(RASA_SERVER_URL, json={
             "sender": sender_id,
             "message": translated_input
         })
+
+        rasa_response.raise_for_status()  # catch errors before .json()
 
         return jsonify(rasa_response.json())
 
@@ -71,4 +70,3 @@ def chat():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)
-

@@ -8,21 +8,8 @@ logging.basicConfig(level=logging.INFO)
 
 sarvam_client = SarvamAI(api_subscription_key="b5d9635d-8168-411e-9ed8-0c2e33114f5a")
 
-# Option 1: HARDCODED ngrok URL (update this every time ngrok restarts)
-# RASA_BASE_URL = "https://7f11d8303061.ngrok-free.app"
-
-# Option 2: Auto-fetch ngrok (uncomment if you want automation)
-def get_ngrok_url():
-    try:
-        tunnels = requests.get("http://localhost:4040/api/tunnels").json()
-        for tunnel in tunnels["tunnels"]:
-            if tunnel["proto"] == "https":
-                return tunnel["public_url"]
-    except Exception as e:
-        logging.error(f"[NGROK] Failed to get ngrok URL: {e}")
-    return None
-
-RASA_BASE_URL = get_ngrok_url()
+# ✅ HARDCODE your Rasa backend URL here
+RASA_BASE_URL = "https://7f11d8303061.ngrok-free.app"  # Update this as needed
 RASA_SERVER_URL = f"{RASA_BASE_URL}/webhooks/rest/webhook"
 
 @app.route("/chat", methods=["POST"])

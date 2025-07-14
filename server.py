@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO)
 sarvam_client = SarvamAI(api_subscription_key="b5d9635d-8168-411e-9ed8-0c2e33114f5a")
 
 # Option 1: HARDCODED ngrok URL (update this every time ngrok restarts)
-RASA_BASE_URL =    "https://c3da22da2a5f.ngrok-free.app"
+RASA_BASE_URL =    " https://7f11d8303061.ngrok-free.app"
 
 # Option 2: Auto-fetch ngrok (uncomment if you want automation)
 # def get_ngrok_url():

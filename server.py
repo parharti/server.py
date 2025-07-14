@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO)
 sarvam_client = SarvamAI(api_subscription_key="b5d9635d-8168-411e-9ed8-0c2e33114f5a")
 
 # ✅ HARDCODE your Rasa backend URL here
-RASA_BASE_URL = "https://7f11d8303061.ngrok-free.app"  # Update this as needed
+RASA_BASE_URL = "https://7e986468b457.ngrok-free.app"  # Update this as needed
 RASA_SERVER_URL = f"{RASA_BASE_URL}/webhooks/rest/webhook"
 
 @app.route("/chat", methods=["POST"])
